@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102F80">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="PaperVault">
+  <title>PaperVault</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header id="topbar">
+    <button id="back" class="icon-btn hidden" aria-label="Back">&#8249;</button>
+    <h1 id="title">PaperVault</h1>
+    <span id="net" class="net hidden">Offline</span>
+  </header>
+
+  <main id="app"></main>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+
+  <div id="sheet" class="sheet hidden">
+    <div class="sheet-card">
+      <h2 id="sheet-title"></h2>
+      <div id="sheet-body"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="config.js"></script>
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js");
+    }
+  </script>
+</body>
+</html>

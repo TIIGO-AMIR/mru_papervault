@@ -1,0 +1,103 @@
+:root {
+  --blue: #1E4FA3;
+  --blue-dark: #102F80;
+  --blue-light: #E6EEFA;
+  --gold: #B8862B;
+  --gold-light: #F6EBD3;
+  --bg: #F3F6FC;
+  --surface: #FFFFFF;
+  --text: #1B2430;
+  --muted: #5B6778;
+  --danger: #B3261E;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+#topbar {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; gap: 8px;
+  padding: calc(env(safe-area-inset-top) + 10px) 14px 10px;
+  background: var(--blue-dark); color: #fff;
+}
+#topbar h1 { font-size: 18px; margin: 0; flex: 1; }
+.net { background: var(--gold); color: #fff; font-size: 12px; padding: 3px 8px; border-radius: 10px; }
+main { padding: 16px; max-width: 640px; margin: 0 auto; }
+.hidden { display: none !important; }
+.muted { color: var(--muted); font-size: 14px; }
+.error { color: var(--danger); }
+h2 { color: var(--blue); margin: 4px 0 8px; font-size: 22px; }
+
+.card {
+  background: var(--surface); border-radius: 16px; padding: 18px;
+  box-shadow: 0 2px 8px rgba(16, 47, 128, 0.08); margin-bottom: 16px;
+}
+.card.blue { background: var(--blue); color: #fff; }
+.card.gold { background: var(--gold-light); }
+.auth { text-align: center; margin-top: 24px; }
+.logo { width: 104px; height: 104px; object-fit: contain; }
+.motto { color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: 0.5px; margin-top: 20px; }
+
+.stack { display: flex; flex-direction: column; gap: 12px; }
+label.field { display: block; font-size: 13px; color: var(--muted); }
+input, select {
+  width: 100%; padding: 12px; border: 1px solid #C9D4EA; border-radius: 10px;
+  font-size: 16px; background: #fff; color: var(--text);
+}
+input[type="checkbox"] { width: auto; }
+.check { display: flex; gap: 8px; align-items: center; font-size: 15px; }
+
+.btn {
+  display: block; width: 100%; padding: 14px; border: 0; border-radius: 12px;
+  font-size: 16px; font-weight: 600; cursor: pointer; text-align: center;
+}
+.btn:disabled { opacity: 0.6; }
+.btn.primary { background: var(--blue); color: #fff; }
+.btn.gold { background: var(--gold); color: #fff; }
+.btn.outline { background: #fff; color: var(--blue); border: 2px solid var(--blue); }
+.btn.text { background: transparent; color: var(--blue); }
+.btn.danger { background: var(--danger); color: #fff; }
+
+.search {
+  width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid #C9D4EA;
+  background: #fff; font-size: 16px; margin-bottom: 12px;
+}
+.list { list-style: none; margin: 0; padding: 0; background: #fff; border-radius: 16px; overflow: hidden; }
+.row {
+  display: flex; align-items: center; gap: 4px; padding: 10px 6px 10px 16px;
+  border-bottom: 1px solid var(--blue-light);
+}
+.row:last-child { border-bottom: 0; }
+.row-text { flex: 1; min-width: 0; }
+.row-title { font-weight: 600; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.icon-btn {
+  width: 44px; height: 44px; border-radius: 50%; border: 0; background: transparent;
+  color: var(--blue); display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 26px; line-height: 1; padding: 0;
+}
+.icon-btn.gold { color: var(--gold); }
+#back { color: #fff; }
+.empty { text-align: center; color: var(--muted); padding: 32px 16px; background: #fff; border-radius: 16px; }
+
+.viewer { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.page-canvas, .page-img { max-width: 100%; height: auto; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.15); }
+
+.toast {
+  position: fixed; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom) + 16px);
+  background: var(--text); color: #fff; padding: 14px 16px; border-radius: 12px;
+  font-size: 15px; z-index: 20; box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+.sheet {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 10;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.sheet-card {
+  width: 100%; max-width: 640px; background: #fff; border-radius: 20px 20px 0 0;
+  padding: 20px 20px calc(env(safe-area-inset-bottom) + 20px);
+}
+#sheet-body { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
