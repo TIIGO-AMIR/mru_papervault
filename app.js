@@ -34,9 +34,7 @@
   }
 
   function friendly(err) {
-    if (!navigator.onLine) return OFFLINE_MSG;
     const m = String((err && err.message) || err || "").toLowerCase();
-    if (err instanceof TypeError || /fetch|network/.test(m)) return OFFLINE_MSG;
     if (m.includes("invalid login credentials")) return "Email or password is incorrect.";
     if (m.includes("already registered") || m.includes("already exists") || m.includes("duplicate")) {
       return "An account with this email or registration number already exists.";
@@ -49,6 +47,15 @@
     }
     if (m.includes("rate limit") || m.includes("too many")) {
       return "Too many attempts. Please wait a few minutes and try again.";
+    }
+    if (m.includes("email not confirmed")) return "Please confirm your email first. Check your inbox, then log in.";
+    if (m.includes("your-project") || m.includes("your-anon-key")) {
+      return "The app is not connected to its server yet. Ask the administrator to set config.js.";
+    }
+    // Only report "offline" when the phone itself says it has no connection.
+    if (!navigator.onLine) return OFFLINE_MSG;
+    if (err instanceof TypeError || /fetch|network|load failed|connection/.test(m)) {
+      return "Could not reach the PaperVault server. Check your connection and try again.";
     }
     return "Something went wrong. Please try again.";
   }
@@ -118,13 +125,21 @@
     saveProfile(profile);
   }
 
+  function assertConfigured() {
+    if (C.supabaseUrl.includes("YOUR-PROJECT") || C.supabaseAnonKey.includes("YOUR-ANON-KEY")) {
+      throw new Error("The app is not connected to its server yet. Ask the administrator to set config.js.");
+    }
+  }
+
   async function doLogin(email, password) {
+    assertConfigured();
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
     if (error) throw error;
     await ensureProfile(data.user);
   }
 
   async function doRegister(f) {
+    assertConfigured();
     const { data, error } = await sb.auth.signUp({
       email: f.email,
       password: f.password,
@@ -366,7 +381,6 @@
     $("#f-login").onsubmit = async (ev) => {
       ev.preventDefault();
       const btn = $("#l-submit");
-      if (!navigator.onLine) return toast("You need internet to log in the first time on this phone.");
       setBusy(btn, true, "Log in");
       try {
         await doLogin($("#l-email").value.trim(), $("#l-pass").value);
@@ -410,7 +424,6 @@
       };
       if (f.password.length < 8) return toast("Your password must be at least 8 characters.");
       if (f.password !== f.confirm) return toast("The two passwords do not match.");
-      if (!navigator.onLine) return toast("You need internet to create your account.");
       const btn = $("#r-submit");
       setBusy(btn, true, "Create account");
       try {
